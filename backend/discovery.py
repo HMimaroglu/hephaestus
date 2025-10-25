@@ -42,12 +42,14 @@ class DiscoveryService:
             self.sock.bind(("", settings.discovery_port))
             logger.info(f"Discovery service bound to port {settings.discovery_port}")
 
-            mreq = struct.pack("4sl", socket.inet_aton(settings.discovery_multicast_group), socket.INADDR_ANY)
+            local_ip = self._get_local_ip()
+            mreq = struct.pack("4s4s", socket.inet_aton(settings.discovery_multicast_group), socket.inet_aton(local_ip))
             self.sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
             self.sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, settings.discovery_multicast_ttl)
             self.sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, 1)
+            self.sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_IF, socket.inet_aton(local_ip))
 
-            logger.info(f"Joined multicast group {settings.discovery_multicast_group}")
+            logger.info(f"Joined multicast group {settings.discovery_multicast_group} on interface {local_ip}")
         except OSError as e:
             logger.error(f"Failed to bind discovery port or join multicast group: {e}")
             raise
