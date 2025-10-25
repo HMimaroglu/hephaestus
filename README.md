@@ -38,18 +38,34 @@ hephaestus/
 
 ## Quick Start
 
-### Quick Start: Offline WiFi Hotspot Mode
+### Quick Start: Offline Mode (Bluetooth or WiFi)
 
-**Want to run a fully offline mesh with your computer as the host? Follow these steps:**
+**Want to run a fully offline mesh between two computers? Choose your connection method:**
 
-1. **Create WiFi Hotspot on Host Computer:**
+#### Option A: Bluetooth PAN (Easiest - No Configuration)
+
+**On Both Computers:**
+
+1. **Enable Bluetooth and Pair:**
+   - macOS: System Settings → Bluetooth → Turn on Bluetooth
+   - Pair the two computers together
+   - Once paired, you'll see the other computer in your Bluetooth devices
+
+2. **Connect via Bluetooth PAN:**
+   - macOS: Click the Bluetooth icon in menu bar → Click the other computer's name → "Connect to Network"
+   - Or: System Settings → Bluetooth → Right-click the paired device → "Connect to Network"
+   - Both computers should now be on the same network (typically 172.20.10.x range)
+
+#### Option B: WiFi Hotspot
+
+**On Host Computer:**
 
    **macOS:**
-   - System Settings → General → Sharing
-   - Enable "Internet Sharing"
-   - Share from: Ethernet (or your internet connection)
-   - To computers using: Wi-Fi
+   - System Settings → General → Sharing → Internet Sharing
+   - Share from: (select your internet source)
+   - To computers using: Wi-Fi (check the box)
    - Click "Wi-Fi Options" and set network name/password
+   - Toggle Internet Sharing ON
 
    **Windows:**
    - Settings → Network & Internet → Mobile hotspot
@@ -61,14 +77,21 @@ hephaestus/
    nmcli dev wifi hotspot ssid HephaestusNet password mypassword123
    ```
 
-2. **On Host Computer - Install and Run:**
+**On Client Computer:**
+   - Connect to the WiFi hotspot you created
+
+---
+
+**After connecting (either Bluetooth or WiFi):**
+
+3. **On Both Computers - Install and Run:**
    ```bash
    git clone <repository-url>
    cd hephaestus
    pip install -r requirements.txt
    cp .env.hotspot .env
 
-   # Start Ollama
+   # Start Ollama (if not already running)
    ollama serve &
    ollama pull llama3.2:3b
 
@@ -76,18 +99,16 @@ hephaestus/
    python -m backend.app
    ```
 
-3. **On Client Devices - Connect and Run:**
-   - Connect to the WiFi hotspot you created
-   - Install Hephaestus (same as above)
-   - Install Ollama on each device
-   - Run: `python -m backend.app`
-
 4. **Verify:**
-   - Open http://localhost:8000 on any device
-   - You should see all peers discovered automatically
-   - Submit a task and watch it get distributed!
+   - Open http://localhost:8000 on either computer
+   - You should see **1 peer** in the peer count
+   - Click to view peers and see the other computer
+   - Submit a task with role "researcher"
+   - Watch it get processed!
 
 **That's it! Fully offline mesh network with zero internet dependency.**
+
+**Note:** Bluetooth PAN is slower than WiFi but requires zero configuration. Good for 2-3 computers. For larger meshes, use WiFi hotspot or local network.
 
 ---
 
