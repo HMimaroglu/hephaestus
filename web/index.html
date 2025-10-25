@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hephaestus Node Dashboard</title>
+    <link rel="stylesheet" href="/web/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 Hephaestus AI Mesh</h1>
+            <p class="subtitle">Distributed AI Node Dashboard</p>
+        </header>
+
+        <section class="health-section">
+            <h2>Node Health</h2>
+            <div class="card">
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <span class="metric-label">Node ID</span>
+                        <span class="metric-value" id="node-id">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Node Name</span>
+                        <span class="metric-value" id="node-name">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Uptime</span>
+                        <span class="metric-value" id="uptime">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CPU</span>
+                        <span class="metric-value" id="cpu">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Memory</span>
+                        <span class="metric-value" id="memory">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Load</span>
+                        <span class="metric-value" id="load">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">QoS</span>
+                        <span class="metric-value" id="qos">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Active Tasks</span>
+                        <span class="metric-value" id="active-tasks">-</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="roles-section">
+            <h2>Active Roles</h2>
+            <div class="card">
+                <div id="roles-list" class="roles-container">
+                    <p class="empty-message">No active roles</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="peers-section">
+            <h2>Discovered Peers</h2>
+            <div class="card">
+                <div id="peers-count" class="peer-count">0 peers</div>
+                <div id="peers-list" class="peers-container">
+                    <p class="empty-message">No peers discovered</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="tasks-section">
+            <h2>Recent Tasks</h2>
+            <div class="card">
+                <div class="task-submit">
+                    <h3>Submit New Task</h3>
+                    <form id="task-form">
+                        <div class="form-group">
+                            <label for="task-role">Role:</label>
+                            <select id="task-role" required>
+                                <option value="researcher">Researcher</option>
+                                <option value="programmer">Programmer</option>
+                                <option value="presenter">Presenter</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-prompt">Prompt:</label>
+                            <textarea id="task-prompt" rows="4" required placeholder="Enter your task prompt..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Submit Task</button>
+                    </form>
+                </div>
+                <div class="tasks-list">
+                    <h3>Task History</h3>
+                    <div id="tasks-container">
+                        <p class="empty-message">No tasks yet</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Hephaestus v1.0.0 | Last updated: <span id="last-update">-</span></p>
+        </footer>
+    </div>
+
+    <script src="/web/app.js"></script>
+</body>
+</html>
