@@ -131,7 +131,7 @@ async def health():
         memory_percent=mem,
         active_roles=role_manager.get_active_roles(),
         active_tasks=sum(role_manager.active_tasks.values()),
-        peer_count=len(discovery_service.get_peers()),
+        peer_count=len(discovery_service.get_peers()) + len(ws_server.peer_registry),
         load=role_manager.get_load(),
         qos=role_manager.get_qos()
     )
@@ -139,8 +139,10 @@ async def health():
 
 @app.get("/peers", response_model=List[PeerInfo])
 async def list_peers():
-    peers = discovery_service.get_peers()
-    return list(peers.values())
+    multicast_peers = discovery_service.get_peers()
+    ws_peers = ws_server.peer_registry
+    all_peers = {**multicast_peers, **ws_peers}
+    return list(all_peers.values())
 
 
 @app.get("/roles")
