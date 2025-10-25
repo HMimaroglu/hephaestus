@@ -178,12 +178,14 @@ class WebSocketServer:
             logger.info(f"Received PEER_LIST with {len(peer_list.peers)} peers from {message.sender_id}")
 
             for peer_info in peer_list.peers:
-                if peer_info.peer_id != settings.node_id and peer_info.peer_id not in self.connections:
-                    asyncio.create_task(self.connect_to_peer(
-                        peer_info.peer_id,
-                        peer_info.ip,
-                        peer_info.ws_port
-                    ))
+                if peer_info.peer_id != settings.node_id:
+                    self.peer_registry[peer_info.peer_id] = peer_info
+                    if peer_info.peer_id not in self.connections:
+                        asyncio.create_task(self.connect_to_peer(
+                            peer_info.peer_id,
+                            peer_info.ip,
+                            peer_info.ws_port
+                        ))
 
         except Exception as e:
             logger.error(f"Error handling PEER_LIST message: {e}")
