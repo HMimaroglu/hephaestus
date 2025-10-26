@@ -28,6 +28,9 @@ ENV/
 # Environment Variables
 .env
 
+# Documentation
+explanation.md
+
 # State Checkpoints
 .hephaestus_state_*.json
 
