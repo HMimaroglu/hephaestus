@@ -78,8 +78,12 @@ class WebSocketServer:
         except websockets.exceptions.ConnectionClosed:
             logger.info(f"WebSocket connection closed for {peer_id}")
         finally:
-            if peer_id and peer_id in self.connections:
-                del self.connections[peer_id]
+            if peer_id:
+                if peer_id in self.connections:
+                    del self.connections[peer_id]
+                if peer_id in self.peer_registry:
+                    del self.peer_registry[peer_id]
+                    logger.info(f"Removed peer {peer_id} from registry")
 
     async def _route_message(self, message: Message):
         handler = self.message_handlers.get(message.msg_type)
@@ -260,6 +264,9 @@ class WebSocketServer:
         finally:
             if peer_id in self.connections:
                 del self.connections[peer_id]
+            if peer_id in self.peer_registry:
+                del self.peer_registry[peer_id]
+                logger.info(f"Removed peer {peer_id} from registry")
 
     async def connect_to_seed(self, seed_url: str) -> Optional[str]:
         try:
@@ -299,12 +306,26 @@ class WebSocketServer:
             return None
 
     async def _broadcast_peer_list(self):
+        import psutil
+        self_info = PeerInfo(
+            peer_id=settings.node_id,
+            ip=self._get_local_ip(),
+            port=settings.port,
+            ws_port=settings.ws_port,
+            roles=self.role_manager.get_active_roles() if self.role_manager else [],
+            load=psutil.cpu_percent(interval=0.1) / 100.0,
+            qos=1.0 - (psutil.cpu_percent(interval=0.1) / 100.0),
+            last_seen=datetime.utcnow()
+        )
+
+        all_peers = [self_info] + list(self.peer_registry.values())
+
         peer_list_msg = Message(
             msg_type=MessageType.PEER_LIST,
             msg_id=str(uuid.uuid4()),
             sender_id=settings.node_id,
             payload=PeerListMessage(
-                peers=list(self.peer_registry.values())
+                peers=all_peers
             ).model_dump(mode='json')
         )
 
