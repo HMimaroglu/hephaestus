@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #002b50 0%, #002345 50%, #001122 100%);
     color: #333;
     min-height: 100vh;
     padding: 20px;
@@ -83,12 +83,13 @@ section h2 {
 }
 
 .role-badge {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #F76900 0%, #FF8C00 100%);
     color: white;
     padding: 10px 20px;
     border-radius: 20px;
     font-weight: 600;
     text-transform: capitalize;
+    box-shadow: 0 4px 15px rgba(247, 105, 0, 0.3);
 }
 
 .empty-message {
@@ -102,7 +103,7 @@ section h2 {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 15px;
-    color: #667eea;
+    color: #F76900;
 }
 
 .peers-container {
@@ -132,7 +133,7 @@ section h2 {
 
 .peer-id {
     font-weight: 700;
-    color: #667eea;
+    color: #F76900;
 }
 
 .peer-ip {
@@ -186,24 +187,27 @@ section h2 {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #F76900;
+    box-shadow: 0 0 0 3px rgba(247, 105, 0, 0.1);
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #F76900 0%, #FF8C00 100%);
     color: white;
     border: none;
     padding: 12px 30px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(247, 105, 0, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 25px rgba(247, 105, 0, 0.5);
+    background: linear-gradient(135deg, #FF8C00 0%, #F76900 100%);
 }
 
 .tasks-list h3 {
@@ -240,7 +244,7 @@ section h2 {
 
 .task-id {
     font-weight: 700;
-    color: #667eea;
+    color: #F76900;
     font-family: monospace;
 }
 
@@ -303,7 +307,7 @@ section h2 {
 
 .task-role {
     font-weight: 600;
-    color: #764ba2;
+    color: #4a5568;
     text-transform: capitalize;
     margin-bottom: 8px;
 }
@@ -343,7 +347,49 @@ section h2 {
 
 .task-peer {
     font-family: monospace;
-    color: #667eea;
+    color: #F76900;
+}
+
+.tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 6px;
+    backdrop-filter: blur(10px);
+}
+
+.tab-button {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 14px 32px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    position: relative;
+}
+
+.tab-button:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tab-button.active {
+    color: white;
+    background: linear-gradient(135deg, #F76900 0%, #FF8C00 100%);
+    box-shadow: 0 4px 15px rgba(247, 105, 0, 0.4);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
 }
 
 footer {
