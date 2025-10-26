@@ -31,7 +31,15 @@ if ! curl -s http://localhost:11434/api/tags > /dev/null 2>&1; then
 fi
 
 echo ""
-echo "🚀 Starting Hephaestus node..."
+echo "🎭 Select roles for this node (comma-separated):"
+echo "   Available: researcher, programmer, presenter"
+read -p "Roles [researcher]: " ROLES
+ROLES=${ROLES:-researcher}
+
+export INITIAL_ROLES="[\"$(echo $ROLES | sed 's/,/","/g')\"]"
+
+echo ""
+echo "🚀 Starting Hephaestus node with roles: $ROLES"
 echo "   Dashboard: http://localhost:8000"
 echo "   API Docs: http://localhost:8000/docs"
 echo ""
