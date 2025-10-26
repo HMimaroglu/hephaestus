@@ -181,6 +181,17 @@ class WebSocketServer:
             peer_list = PeerListMessage(**message.payload)
             logger.info(f"Received PEER_LIST with {len(peer_list.peers)} peers from {message.sender_id}")
 
+            seed_conn_key = None
+            for key in list(self.connections.keys()):
+                if key.startswith("seed-"):
+                    seed_conn_key = key
+                    break
+
+            if seed_conn_key and message.sender_id != settings.node_id:
+                websocket = self.connections.pop(seed_conn_key)
+                self.connections[message.sender_id] = websocket
+                logger.info(f"Updated seed connection key from {seed_conn_key} to {message.sender_id}")
+
             for peer_info in peer_list.peers:
                 if peer_info.peer_id != settings.node_id:
                     self.peer_registry[peer_info.peer_id] = peer_info
