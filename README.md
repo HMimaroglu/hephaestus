@@ -1,4 +1,4 @@
-# 🔥 Hephaestus - Adaptive Offline AI Mesh
+# Hephaestus - Adaptive Offline AI Mesh
 
 Hephaestus is a distributed AI mesh network where nodes discover each other via UDP, communicate via WebSockets, and collaboratively process tasks using local LLM models. Each node can dynamically clone or swap AI roles based on load, creating a resilient, self-organizing system.
 
@@ -164,6 +164,11 @@ uvicorn backend.app:app --host 0.0.0.0 --port 8000
 Open your browser to:
 - Node 1: http://localhost:8000
 - Node 2: http://localhost:8100
+
+The dashboard features:
+- **Request/Use Tab**: Submit tasks and view task history with real-time status updates
+- **Management Tab**: Monitor node health, active roles, and discovered peers
+- Modern UI with Syracuse University color scheme (blue gradient background, orange accents)
 
 ## API Endpoints
 
