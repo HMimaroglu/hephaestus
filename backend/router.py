@@ -119,10 +119,12 @@ class TaskRouter:
             logger.info(f"Delegated task {task.task_id} to {best_peer.peer_id}")
 
     async def _find_best_peer(self, role: str) -> Optional[PeerInfo]:
-        peers = self.discovery_service.get_peers()
+        multicast_peers = self.discovery_service.get_peers()
+        ws_peers = self.ws_server.peer_registry
+        all_peers = {**multicast_peers, **ws_peers}
 
         suitable_peers = [
-            peer for peer in peers.values()
+            peer for peer in all_peers.values()
             if role in peer.roles
         ]
 
